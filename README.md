@@ -94,6 +94,42 @@ Visit `consul web ui` and manage your dns record under `key/value` tab
     └── consul-template.conf
 ```
 
+### Known issues
+1. `ulimit -n` too small
+
+    ```
+    [ERR] (view) "key_or_default(/dns/CNAME/www.eccce/comment, "")" store key: error fetching: Get http://127.0.0.1:8500/v1/kv/dns/CNAME/www.eccce/comment?stale=&wait=60000ms: dial tcp 127.0.0.1:8500: socket: too many open files
+    ```
+    
+    Execute something like below to fix 
+    
+    ```
+    # show the current ulimit
+    ulimit -n
+    # change ulimit
+    ulimit -n 65536
+    # check again
+    ulimit -n
+    ``` 
+    
+2. Current consul node not join the datacenter
+
+    ```
+    [ERR] (view) "storeKeyPrefix(dns/CNAME)" store key prefix: error fetching: Unexpected response code: 500
+    ```
+    
+    
+    Execute something like below to fix 
+    
+    ```
+    # show the current consul members
+    consul members
+    # join the cluster
+    consul join some-node-ip
+    # check again
+    consul members
+    ``` 
+
 ### License
 
 Apache License 2.0
