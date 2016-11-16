@@ -1,0 +1,8 @@
+{
+        "client_addr": "0.0.0.0",
+        "bind_addr": "0.0.0.0",
+        "data_dir": "/data/consul/data",
+        "node_name": "dns-1",
+        "datacenter": "replace_your_data_center_here",
+        "acl_token": "replace_your_acl_token_here"
+}

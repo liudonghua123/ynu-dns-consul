@@ -1,0 +1,17 @@
+{
+        "service": {
+                "name": "dns",
+                "tags": ["fs-production"],
+                "address": "replace_your_local_ip_here",
+                "port": 53,
+                "checks": [
+                        {
+                                "id": "check_dns_1",
+                                "name": "check dns service",
+                                "interval": "10s",
+                                "tcp": "replace_your_local_ip_here:53",
+                                "timeout": "3s"
+                        }
+                ]
+        }
+}

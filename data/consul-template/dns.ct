@@ -1,0 +1,37 @@
+$TTL 86400      ; 1 day
+@       IN      SOA     pridns.ynu.edu.cn. root.pridns.ynu.edu.cn. (
+                                2016111601    ;   serial number
+                                10800   ;   Refresh interval, every 3 hours
+                                3600    ;   Retry interval, every 30 minutes
+                                604800  ;   Expire after 1 week
+                                86400 ) ;    Minimum TTL of 1 day
+        IN      NS      pridns.ynu.edu.cn.
+        IN      NS      secdns.ynu.edu.cn.
+        IN      MX      10      webmail.ynu.edu.cn.
+    IN  TXT "MS=ms18922995"
+
+mail.ynu.edu.cn.   MX      10       webmail.ynu.edu.cn.
+alumnu.ynu.edu.cn.  MX      10       webmail.ynu.edu.cn.
+stu             IN      MX      15   1826300652.mail.outlook.com.
+sse             IN      MX      20   71892d7f2309e64ba6aa36cf20484a.mail.outlook.com.
+
+pridns           IN      A      202.203.208.33
+pridns           IN      AAAA   2001:250:2800:2::33
+secdns           IN      A      202.203.208.34
+secdns           IN      AAAA   2001:250:2800:2::34
+webmail          IN      A      202.203.208.32
+webmail          IN      AAAA   2001:250:2800:2::32
+
+; --------------- A record ---------------
+{{ range $key, $pairs := tree "dns/A" | byKey}}
+; {{key_or_default (printf "/dns/A/%s/comment" $key) ""}}
+{{key_or_default (printf "/dns/A/%s/name" $key) ""}}    IN    A     {{key_or_default (printf "/dns/A/%s/ipv4" $key) ""}}
+{{end}}
+; --------------- A record end ---------------
+
+; --------------- CNAME record ---------------
+{{ range $key, $pairs := tree "dns/CNAME" | byKey}}
+; {{key_or_default (printf "/dns/CNAME/%s/comment" $key) ""}}
+{{key_or_default (printf "/dns/CNAME/%s/name" $key) ""}}    IN    CNAME     {{key_or_default (printf "/dns/CNAME/%s/canonical-name" $key) ""}}
+{{end}}
+; --------------- CNAME record end ---------------
